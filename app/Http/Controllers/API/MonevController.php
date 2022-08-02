@@ -66,8 +66,7 @@ class MonevController extends Controller
                 'platform' => 'required',
                 'linkPlatform' => 'required',
                 'pokokBahasan' => 'required',
-                'keterangan' => 'required',
-                'buktiPerkuliahan' => 'required'
+                'keterangan' => 'required'
             ]);
 
             $monev = Monev::create([
@@ -90,8 +89,7 @@ class MonevController extends Controller
                 'platform' => $request->platform,
                 'linkPlatform' => $request->linkPlatform,
                 'pokokBahasan' => $request->pokokBahasan,
-                'keterangan' => $request->keterangan,
-                'buktiPerkuliahan' => $request->buktiPerkuliahan
+                'keterangan' => $request->keterangan
             ]);
 
             $data = Monev::where('id', '=', $monev->id)->get();
