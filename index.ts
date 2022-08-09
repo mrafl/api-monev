@@ -1,18 +1,14 @@
 import * as dotenv from 'dotenv';
 dotenv.config()
 
-import express, {static} from "express";
+import express from "express";
 import Router from "./utilities/router";
 import * as BodyParser from "body-parser";
 import * as cors from 'cors';
-import {knex} from "./utilities/knex";
-import {createLog, error, now, success, tanggalExpired} from "./utilities/Utils";
-import {stat} from "fs";
 
 const port = process.env.PORT;
 const app = express();
 const cron = require('node-cron');
-const nodemailer = require('nodemailer');
 
 app.use(cors.default((_, callback) => callback(null, {
     origin: "*",
@@ -27,10 +23,3 @@ Router.route(app);
 
 app.listen(port);
 console.log("Server Started")
-
-
-cron.schedule('* * * * * *', function (){
-    let expiredBimbingan = null;
-    expiredBimbingan = await knex("bimbingan")
-        .where("expiredAt", now())
-});

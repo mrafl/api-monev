@@ -40,14 +40,6 @@ export default class Services {
         }
     }
 
-    static async dataMahasiswaPerProdi(kodeProdi: string, kodeSemester: string, token: string) {
-        await this.get(`siakad_api/api/as400/dataMahasiswaPerProdi/${kodeProdi}/${kodeSemester}/${token}`)
-    }
-
-    static async getProdi(kodeProdi: string) {
-        return this.get(`siakad_api/api/as400/programStudi/${kodeProdi}`)
-    }
-
     static async getSemesterAktif(){
         return this.get(`siakad_api/api/as400/semesterAktif/13`)
     }
