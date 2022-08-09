@@ -1,0 +1,12 @@
+{
+    "watch": [
+        ".",
+        ".env"
+    ],
+    "ext": "ts,json",
+    "ignore": [
+        "./build",
+        "./public"
+    ],
+    "exec": "ts-node ./index.ts"
+}
