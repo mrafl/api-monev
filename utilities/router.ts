@@ -5,6 +5,8 @@ import Constants from "./constants";
 import Services from "./Services";
 import AuthController from "../controllers/AuthController";
 import AkunController from "../controllers/AkunController";
+import MonevController from "../controllers/MonevController";
+import RekapMonevController from "../controllers/RekapMonevController";
 
 export interface RouteConfig {
     request: Request,
@@ -27,13 +29,32 @@ export default class Router {
         router.post("/akun/:id/hapus", AkunController.destroy)
     }
 
+    static monevRouter(router: Router) {
+        router.get("/monev", MonevController.index)
+        router.post("/monev", MonevController.store)
+        router.get("/monev/prodi/:kodeProdi", MonevController.getMonevProdi)
+        router.get("/monev/prodi/:kodeProdi/:semester", MonevController.getMonevProdiPerSemester)
+        router.get("/monev/prodi/:kodeProdi/:semester/:waktu", MonevController.getMonevProdiPerSemesterPerWaktu)
+        router.get("/monev/mahasiswa/:nim", MonevController.showMonevMahasiswa)
+        router.get("/monev/mataKuliah/:kodeSeksi/:semester", MonevController.showMonevMataKuliah)
+    }
+
+    static rekapMonevRouter(router: Router) {
+        router.get("/rekapMonev", RekapMonevController.index)
+        router.get("/rekapMonev/:kodeProdi/:semester", RekapMonevController.show)
+    }
+
     static route(app: Express) {
         const router = new Router(app)
 
         router.post("/masuk", AuthController.login)
+        router.get("/mataKuliah/:kodeSeksi/:semester", MonevController.getMataKuliah)
+        router.get("/mahasiswa/:nim", MonevController.getDataMahasiswa)
         router.get("/logs", AuthController.userLogs, Constants.all)
 
         this.akunRouter(router)
+        this.monevRouter(router)
+        this.rekapMonevRouter(router)
 
     }
 

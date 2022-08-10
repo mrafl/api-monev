@@ -20,15 +20,7 @@ export default class Services {
         switch (mode) {
             case Constants.mhs:
                 const userPayload = await this.get(`siakad_api/api/as400/dataMahasiswa/${identifier}/${token}`)
-                const progress = await knex("progress")
-                    .where("nim", identifier)
-                    .first()
-                if (progress != null) return Object.assign({progress: progress.progress}, userPayload)
-                await knex("progress").insert({
-                    nim: identifier,
-                    progress: 0
-                })
-                return Object.assign({progress: 0}, userPayload)
+                return Object.assign(userPayload)
             case Constants.dosen:
                 return this.get(`siakad_api/api/as400/dataDosen/${identifier}/${token}`)
             case Constants.prodi:
@@ -42,6 +34,14 @@ export default class Services {
 
     static async getSemesterAktif(){
         return this.get(`siakad_api/api/as400/semesterAktif/13`)
+    }
+
+    static async getMataKuliah(kodeSeksi: string, semester: string){
+        return this.get(`siakad_api/api/as400/kelasKuliah/${kodeSeksi}/${semester}/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Ijk5MDM4MTkwMzYiLCJuYW1hX3VzZXIiOiJJcnVsIFRyaXNoaW1hIEF0aWFzIiwia2VsYW1pbiI6IjAiLCJtb2RlX3VzZXIiOiI5IiwidW5pdF91c2VyIjoiICAgICAiLCJzdGF0dXNfdXNlciI6IjEifQ.rY7FmUd8qsVJBoJnRIzv2iMsEpBvdwYYJUCetgBeiS4`)
+    }
+
+    static async getDataMahasiswa(nim: string){
+        return this.get(`siakad_api/api/as400/dataMahasiswa/${nim}/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Ijk5MDM4MTkwMzYiLCJuYW1hX3VzZXIiOiJJcnVsIFRyaXNoaW1hIEF0aWFzIiwia2VsYW1pbiI6IjAiLCJtb2RlX3VzZXIiOiI5IiwidW5pdF91c2VyIjoiICAgICAiLCJzdGF0dXNfdXNlciI6IjEifQ.rY7FmUd8qsVJBoJnRIzv2iMsEpBvdwYYJUCetgBeiS4`)
     }
 
     private static async post(endpoint: string, data: any) {

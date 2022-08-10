@@ -34,11 +34,3 @@ export function error(message: any) {
         data: null
     }
 }
-
-export async function createLog(identifier: string, log: string) {
-    await knex("user_logs").insert({
-        identifier: identifier,
-        log: log,
-        createdAt: now()
-    })
-}
