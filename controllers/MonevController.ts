@@ -1,8 +1,6 @@
 import {RouteConfig} from "../utilities/router";
-import Constants from "../utilities/constants";
 import {knex} from "../utilities/knex";
-import {error, now, success, tanggalExpired} from "../utilities/Utils";
-import FileManager from "../utilities/FileManager";
+import {error, now, success} from "../utilities/Utils";
 import Services from "../utilities/Services";
 
 export default class MonevController {
@@ -13,8 +11,6 @@ export default class MonevController {
     }
 
     static async store({request}: RouteConfig): Promise<any> {
-        const getSemesterAktif = await Services.getSemesterAktif()
-
         await knex("monev").insert({
             semester: request.body["semester"],
             waktu: request.body["waktu"],
@@ -39,35 +35,6 @@ export default class MonevController {
             createdAt: now(),
             updatedAt: now()
         })
-
-        const mataKuliah = await knex("presentase_kehadiran")
-            .where("kodeSeksi", request.body["kodeSeksiMK"])
-            .where("semester", request.body["semester"])
-            .first()
-        if (mataKuliah == null) {
-            await knex("presentase_kehadiran").insert({
-                kodeProdi: request.body["kodeProdi"],
-                kodeSeksi: request.body["kodeSeksiMK"],
-                semester: request.body["semester"],
-                namaDosen: request.body["namaDosen"],
-                namaMataKuliah: request.body["namaMK"],
-                rps: request.body["rps"],
-                pertemuan1: 1,
-                createdAt: now(),
-                updatedAt: now()
-            })
-        } else {
-            await knex("presentase_kehadiran")
-                .where("kodeSeksi", request.body["kodeSeksiMK"])
-                .where("semester", request.body["semester"])
-                .update({
-
-                })
-        }
-
-        await knex("presentase_kehadiran")
-            .where("kodeSeksi", request.body["kodeSeksiMK"])
-            .where("semester", getSemesterAktif.data[0].kode_semester)
 
         return success()
     }
