@@ -30,6 +30,7 @@ export default class MonevController {
             tanggalPertemuan: request.body["tanggalPertemuan"],
             platform: request.body["platform"],
             linkPlatform: request.body["linkPlatform"],
+            tempatLuring: request.body["tempatLuring"],
             pokokBahasan: request.body["pokokBahasan"],
             keterangan: request.body["keterangan"],
             createdAt: now(),
