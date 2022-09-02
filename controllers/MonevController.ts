@@ -11,6 +11,16 @@ export default class MonevController {
     }
 
     static async store({request}: RouteConfig): Promise<any> {
+        const cekMonev = await knex("monev")
+            .where("nim_pj", request.params["nim_pj"])
+            .where("kodeSeksiMK", request.params["kodeSeksiMK"])
+            .where("pertemuanKe", request.params["pertemuanKe"])
+            .first()
+
+        if (cekMonev != null) {
+            return error("Monev pada mata kuliah dan pertemuan tersebut sudah di isi !")
+        }
+
         await knex("monev").insert({
             semester: request.body["semester"],
             waktu: request.body["waktu"],
