@@ -42,6 +42,9 @@ export default class Router {
     static rekapMonevRouter(router: Router) {
         router.get("/rekapMonev", RekapMonevController.index)
         router.get("/rekapMonev/:kodeProdi/:semester", RekapMonevController.show)
+        router.get("/cekPertemuan/:semester/:kodeSeksi/:pertemuanKe", RekapMonevController.cekPertemuan)
+        router.get("/cekMataKuliahPerDosen/:semester/:namaDosen", RekapMonevController.cekMataKuliahPerDosen)
+        router.get("/getMataKuliahPerProdi/:semester/:kodeProdi", RekapMonevController.getMataKuliahPerProdi)
     }
 
     static route(app: Express) {
